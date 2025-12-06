@@ -1,58 +1,85 @@
 <script setup lang="ts">
-import { Button } from './components/ui/button'
-import AppCard, { type AppCardAction } from './components/ui/AppCard.vue'
-
-const basicActions: AppCardAction[] = [
-  { label: 'Learn More' },
-  { label: 'Dismiss' }
-]
-
-function onCardAction(payload: { action: AppCardAction; event: MouseEvent }) {
-  console.log('AppCard action click:', payload.action.label)
-}
-
-const advancedActions: AppCardAction[] = [
-  { label: 'Save', onClick: (action) => console.log('Inline handler:', action.label) },
-  { label: 'Delete', onClick: (action) => console.log('Inline handler:', action.label) }
-]
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  <Button>Click me</Button>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-  <section style="display:grid; gap:1rem; grid-template-columns: 1fr; max-width: 960px; margin: 2rem auto;">
-    <!-- Basic usage with props only -->
-    <AppCard
-      title="Basic AppCard"
-      content="This is a simple card using props only."
-      :actions="basicActions"
-      @action-click="onCardAction"
-    />
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
 
-    <!-- Advanced usage with slots and image -->
-    <AppCard
-      title="Advanced AppCard"
-      imageUrl="https://picsum.photos/seed/vue-card/640/320"
-      :actions="advancedActions"
-      @action-click="onCardAction"
-    >
-      <template #header>
-        <h3 class="text-xl font-semibold">Custom Header Slot</h3>
-      </template>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
 
-      <p>
-        This content comes from the default slot with extra formatting and an
-        <a href="https://vuejs.org/" target="_blank" rel="noreferrer">external link</a>.
-      </p>
-
-      <template #footer>
-        <div style="display:flex; gap:0.5rem;">
-          <Button>Slot Button</Button>
-        </div>
-      </template>
-    </AppCard>
-  </section>
+  <RouterView />
 </template>
 
-<style scoped></style>
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>
